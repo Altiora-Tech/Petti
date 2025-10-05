@@ -52,10 +52,17 @@ const systemInstruction = `Eres Petti, un asistente de IA amigable y experto en 
 const MessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
     const isModel = message.role === 'model';
     return (
-        <div className={`flex items-start gap-4 ${!isModel && 'justify-end'}`}>
+        <div id="petti-assistant" className={`flex items-start gap-4 ${!isModel && 'justify-end'}`}>
             {isModel && (
                 <div className="flex-shrink-0 w-10 h-10 bg-petti-blue/20 rounded-full flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-petti-blue" />
+                    <img 
+                        src="/pettiai.png" 
+                        alt="Petti AI"
+                        name="pettiai"
+                        aria-label="pettiai"
+                        width={500}
+                        height={500}
+                        className="w-14 h-auto" />
                 </div>
             )}
             <div className={`max-w-md p-4 rounded-2xl ${isModel ? 'bg-white dark:bg-petti-deep-blue/80 rounded-tl-none' : 'bg-petti-blue text-white rounded-br-none'}`}>
