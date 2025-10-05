@@ -8,7 +8,7 @@ const articles: BlogArticle[] = [
     title: 'Cómo elegir el juguete perfecto para la personalidad de tu perro',
     author: 'Dr. Lucas Marín',
     date: '15 de Julio, 2025',
-    imageUrl: 'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?q=80&w=1974&auto=format&fit=crop',
+    imageUrl: 'https://i.ibb.co/bRRjFBkm/juegue.jpg',
     excerpt: 'No todos los juguetes son iguales. Aprende a identificar qué tipo de juguete estimulará mejor a tu perro según su raza, edad y nivel de energía.'
   },
   {
@@ -17,7 +17,7 @@ const articles: BlogArticle[] = [
     title: 'Ansiedad por separación: Señales y cómo ayudar a tu mascota',
     author: 'Ana Torres, Etóloga',
     date: '10 de Julio, 2025',
-    imageUrl: 'https://i.ibb.co/QFGbRZJD/cute-pet-collage-isolated.jpg',
+    imageUrl: 'https://i.ibb.co/xtw53Kjs/tierur.jpg',
     excerpt: '¿Tu perro se estresa cuando te vas? Descubre las señales clave de la ansiedad por separación y estrategias efectivas para darle tranquilidad.'
   },
   {
@@ -26,7 +26,7 @@ const articles: BlogArticle[] = [
     title: 'El arte de las presentaciones: Cómo introducir un nuevo gato en casa',
     author: 'Equipo Petti',
     date: '5 de Julio, 2025',
-    imageUrl: 'https://i.ibb.co/F4vG42v8/closeup-vertical-shot-cute-european-shorthair-cat.jpg',
+    imageUrl: 'https://i.ibb.co/847j0p7Q/gatito.jpg',
     excerpt: 'Traer un nuevo felino a casa es un proceso delicado. Sigue estos pasos para asegurar una transición suave y una amistad duradera.'
   },
   {
@@ -35,7 +35,7 @@ const articles: BlogArticle[] = [
     title: 'Más que un paseo: Los beneficios ocultos de la caminata diaria',
     author: 'Dr. Lucas Marín',
     date: '1 de Julio, 2025',
-    imageUrl: 'https://i.ibb.co/49n0xHp/guide-dog-helping-blind-man-city-handsome-blind-guy-have-rest-with-golden-retriever-city.jpg',
+    imageUrl: 'https://i.ibb.co/gL5NCtHk/pasosee.jpg',
     excerpt: 'Exploramos cómo los paseos diarios impactan positivamente no solo en la salud física de tu perro, sino también en su bienestar mental y social.'
   }
 ];

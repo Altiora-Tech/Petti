@@ -8,7 +8,7 @@ const servicesData = [
     name: 'Paseos',
     description: 'Sabemos que un perro cansado es un perro feliz. Nuestros paseadores profesionales se aseguran de que tu compañero tenga su dosis diaria de ejercicio, socialización y exploración en un entorno seguro.',
     icon: <FaPaw className="w-10 h-10 text-petti-blue" />,
-    imageUrl: 'https://i.ibb.co/hFgsDJb3/woman-holding-surgical-mask-beautiful-dog-running-dry-leaves-street.jpg',
+    imageUrl: 'https://i.ibb.co/fd00T9jx/paseos.jpg',
     included: [
       'Paseos individuales o en grupos pequeños.',
       'Rastreo GPS en tiempo real.',
@@ -21,7 +21,7 @@ const servicesData = [
     name: 'Peluquería',
     description: 'Un servicio de spa completo a domicilio o en el salón de nuestros expertos. Mantenemos a tu mascota limpia, sana y con un look increíble, utilizando productos de alta calidad y mucho cariño.',
     icon: <ShowerHead className="w-10 h-10 text-petti-accent" />,
-    imageUrl: 'https://i.ibb.co/XrwM4SNd/lovely-pet-portrait-isolated.jpg',
+    imageUrl: 'https://i.ibb.co/Z1K5f4R0/ing.jpg',
     included: [
       'Baño con productos hipoalergénicos.',
       'Corte de pelo y peinado según raza.',
@@ -34,7 +34,7 @@ const servicesData = [
     name: 'Veterinaria',
     description: 'La salud de tu mascota es nuestra prioridad. Te conectamos con veterinarios matriculados para consultas a domicilio, vacunaciones anuales o atención de emergencias, evitando el estrés del traslado.',
     icon: <Hospital className="w-10 h-10 text-petti-pink" />,
-    imageUrl: 'https://i.ibb.co/sThYK3B/close-up-veterinarian-taking-care-cat.jpg',
+    imageUrl: 'https://i.ibb.co/rGG5x23G/vet.jpg',
     included: [
       'Consultas generales y chequeos de rutina.',
       'Planes de vacunación y desparasitación.',

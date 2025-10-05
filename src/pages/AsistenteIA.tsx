@@ -161,7 +161,7 @@ const AsistenteIA: React.FC = () => {
     ];
 
     return (
-        <div className="bg-white dark:bg-petti-deep-blue/40">
+        <div className="bg-white dark:bg-petti-deep-blue/40 dark:text-white">
             <div className="container mx-auto px-6 py-12">
                 <div className="text-center max-w-3xl mx-auto">
                     <div className="flex justify-center mb-4">
