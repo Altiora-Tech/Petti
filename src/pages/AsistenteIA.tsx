@@ -4,54 +4,58 @@ import { ChatMessage } from '../../types';
 import { Sparkles, Send } from 'lucide-react';
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 
-// --- Mock Data ---
-const petProfile = {
-  name: 'Nala',
-  type: 'Perro',
-  breed: 'Golden Retriever',
-  age: '3 años',
-  vaccines: {
-    lastRabies: '2023-08-20',
-    nextRabies: '2024-08-20',
-  },
-  allergies: ['Pollo'],
-  notes: 'Le encanta jugar a buscar la pelota y es muy sociable con otros perros.'
-};
+const systemInstruction = `Eres Petti, un asistente de IA amigable y experto en veterinaria y cuidado de mascotas. Tu propósito es ayudar a los dueños de mascotas a gestionar y entender mejor la salud de sus compañeros. Tu tono es cálido, profesional y educativo.
 
-const systemInstruction = `Eres Petti, un asistente de IA amigable y experto en el cuidado de mascotas. Tu propósito es ayudar a los dueños de mascotas a gestionar el cuidado de sus compañeros.
-    
-    Aquí está la información de la mascota del usuario actual:
-    - Nombre: ${petProfile.name}
-    - Especie: ${petProfile.type}
-    - Raza: ${petProfile.breed}
-    - Edad: ${petProfile.age}
-    - Próxima vacuna de rabia: ${petProfile.vaccines.nextRabies}
-    - Alergias: ${petProfile.allergies.join(', ')}
-    - Notas: ${petProfile.notes}
+**INFORMACIÓN CLAVE DE CONOCIMIENTO:**
 
-    Reglas:
-    1. Responde siempre de forma cálida, concisa y útil. Usa emojis de mascotas como 🐾, ❤️, 🦴 cuando sea apropiado.
-    2. Utiliza la información de la mascota proporcionada para responder preguntas personalizadas.
-    3. Cuando te pidan recomendaciones de servicios (paseadores, veterinarios, etc.), menciona que Petti puede encontrar profesionales verificados cercanos y anima al usuario a usar el buscador de la app. Si preguntan por filtros como métodos de pago, confirma que la app permite filtrar la búsqueda. No inventes nombres de profesionales.
-    4. Si no sabes una respuesta, dilo honestamente y sugiere consultar a un veterinario profesional.
-    5. Mantén las respuestas relativamente cortas y fáciles de leer, usando párrafos cortos o listas.`;
+**1. Frecuencia de Baño:**
+   - **Perros:** La frecuencia ideal varía. Como regla general:
+     - **Pelo corto (ej. Beagle):** Cada 2-3 meses.
+     - **Pelo medio/largo (ej. Golden Retriever, Caniche):** Cada 4-6 semanas para evitar enredos.
+     - **Razas sin pelo o piel sensible:** Según recomendación veterinaria.
+     - **Estilo de vida:** Perros que pasan mucho tiempo al aire libre pueden necesitar baños más frecuentes.
+     - **Importante:** Bañar en exceso puede resecar la piel. Usa siempre champú específico para perros.
+   - **Gatos:** Son excelentes auto-limpiadores y raramente necesitan un baño. Solo báñalos si:
+     - Se han ensuciado con algo tóxico o pegajoso.
+     - Tienen una condición médica que lo requiere (ej. sarna, tiña).
+     - Son incapaces de asearse por sobrepeso o artritis.
+     - Si es necesario, usa champú para gatos y hazlo una experiencia positiva y rápida.
+
+**2. Calendario de Vacunación (Esquema General):**
+   - **Cachorros Caninos:**
+     - **6-8 semanas:** Moquillo (Distemper), Parvovirus, Hepatitis (Adenovirus).
+     - **9-11 semanas:** Refuerzo de las anteriores.
+     - **12-16 semanas:** Refuerzo final y, a menudo, la primera dosis de Rabia (según la ley local).
+     - **Vacunas no esenciales (según riesgo):** Leptospirosis, Tos de las perreras (Bordetella), enfermedad de Lyme.
+   - **Gatitos Felinos:**
+     - **6-8 semanas:** Trivalente Felina (Rinotraqueítis, Calicivirus, Panleucopenia).
+     - **9-11 semanas:** Refuerzo de la Trivalente.
+     - **12-16 semanas:** Refuerzo final de la Trivalente y, a menudo, la primera dosis de Rabia.
+     - **Vacunas no esenciales (según riesgo):** Leucemia Felina (FeLV), especialmente para gatos con acceso al exterior.
+   - **Adultos (Perros y Gatos):**
+     - Refuerzos anuales o cada 3 años, dependiendo de la vacuna y las recomendaciones del veterinario. La Rabia se rige por las leyes locales (anual o cada 3 años).
+
+**REGLAS DE INTERACCIÓN:**
+
+1.  **Conversación Natural:** No tienes información previa de la mascota. Basa tus respuestas en la información que el usuario te proporciona en la conversación. Si necesitas más detalles para dar una mejor respuesta (como especie, raza, edad), ¡pídelos! Por ejemplo: "Para darte una recomendación más precisa, ¿podrías decirme qué tipo de mascota tienes y su edad?".
+
+2.  **Tono y Estilo:** Responde siempre de forma cálida, concisa y útil. Usa emojis de mascotas como 🐾, ❤️, 🦴 cuando sea apropiado. Estructura la información compleja en listas para facilitar la lectura.
+
+3.  **Promociona Petti:** Cuando te pidan recomendaciones de servicios (paseadores, veterinarios, peluqueros), menciona que a través de la app Petti pueden encontrar profesionales verificados en su zona. Anima al usuario a usar el buscador.
+
+4.  **DISCLAIMER OBLIGATORIO:** Siempre, al final de una recomendación de salud, incluye una variación de este aviso: "**Recuerda 🐾:** Esta información es una guía general. El plan de salud perfecto para tu mascota debe ser definido por un **veterinario profesional** que conozca su historial y necesidades específicas. ¡Una consulta a tiempo es el mejor cuidado!". No ofrezcas diagnósticos.
+
+5.  **Honestidad:** Si no sabes una respuesta, dilo honestamente y redirige siempre a la consulta con un profesional. "Esa es una excelente pregunta. Para darte la respuesta más precisa, lo mejor sería consultarlo directamente con un veterinario."`;
 
 // --- Components ---
 
 const MessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
     const isModel = message.role === 'model';
     return (
-        <div id="petti-assistant" className={`flex items-start gap-4 ${!isModel && 'justify-end'}`}>
+        <div className={`flex items-start gap-4 ${!isModel && 'justify-end'}`}>
             {isModel && (
                 <div className="flex-shrink-0 w-10 h-10 bg-petti-blue/20 rounded-full flex items-center justify-center">
-                    <img 
-                        src="/pettiai.png" 
-                        alt="Petti AI"
-                        name="pettiai"
-                        aria-label="pettiai"
-                        width={500}
-                        height={500}
-                        className="w-12 h-auto" />
+                    <Sparkles className="w-6 h-6 text-petti-blue" />
                 </div>
             )}
             <div className={`max-w-md p-4 rounded-2xl ${isModel ? 'bg-white dark:bg-petti-deep-blue/80 rounded-tl-none' : 'bg-petti-blue text-white rounded-br-none'}`}>
@@ -76,11 +80,7 @@ const TypingIndicator: React.FC = () => (
 
 const PromptSuggestion: React.FC<{ text: string, onClick: (text: string) => void }> = ({ text, onClick }) => (
     <button
-        type="button"
-        name="button"
-        id="button"
         onClick={() => onClick(text)}
-        aria-label="button"
         className="px-4 py-2 bg-white/80 dark:bg-petti-light-blue/10 border border-petti-light-blue dark:border-petti-light-blue/20 rounded-full text-sm text-petti-deep-blue dark:text-petti-base hover:bg-white dark:hover:bg-petti-light-blue/20 transition"
     >
         {text}
@@ -109,7 +109,7 @@ const AsistenteIA: React.FC = () => {
                 chatRef.current = chatInstance;
                 setMessages([{
                     role: 'model',
-                    text: `¡Hola! Soy Petti, tu asistente inteligente \n\nEstoy aquí para ayudarte con todo lo relacionado al cuidado de ${petProfile.name}. ¿En qué te puedo ayudar hoy?`
+                    text: `¡Hola! Soy Petti, tu asistente veterinario de IA 🐾\n\nEstoy aquí para ayudarte con cualquier duda sobre la salud y bienestar de tu mascota. ¿En qué puedo ayudarte hoy?`
                 }]);
             } catch (error) {
                 console.error("Error initializing chat:", error);
@@ -148,9 +148,9 @@ const AsistenteIA: React.FC = () => {
     };
 
     const suggestions = [
-        `¿Cuándo es la próxima vacuna de ${petProfile.name}?`,
-        "Encuéntrame un paseador para mañana",
-        "¿Qué comida me recomiendas para Nala?",
+        "¿Cada cuánto debo bañar a mi perro?",
+        "Háblame sobre las vacunas para cachorros",
+        "¿Qué es la vacuna Trivalente Felina?",
     ];
 
     return (
@@ -184,14 +184,11 @@ const AsistenteIA: React.FC = () => {
                                 type="text"
                                 value={userInput}
                                 onChange={(e) => setUserInput(e.target.value)}
-                                required
                                 placeholder="Escribe tu pregunta aquí..."
                                 className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-white dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition"
                                 disabled={isLoading}
                             />
                             <button
-                                name="button"
-                                id="button"
                                 type="submit"
                                 disabled={isLoading || !userInput.trim()}
                                 className="p-3 bg-petti-blue text-white rounded-full hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
