@@ -1,5 +1,30 @@
 {
   "name": "Petti",
+  "displayName": "Petti - Pet Care Services",
+  "version": "1.0.0",
   "description": "Petti connects loving pet owners with trusted caregivers. Your pet, always in good hands. Find, book, and pay for veterinarians, walkers, groomers, and more in one simple, fast, and secure place.",
-  "requestFramePermissions": []
+  "author": "Altiora Tech",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Altiora-Tech/Petti"
+  },
+  "keywords": [
+    "pets",
+    "pet care",
+    "veterinarians",
+    "pet services",
+    "pet walking",
+    "pet grooming"
+  ],
+  "requestFramePermissions": [],
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ]
 }
