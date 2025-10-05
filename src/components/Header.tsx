@@ -95,7 +95,7 @@ const Header: React.FC = () => {
         <nav className="hidden lg:flex items-center gap-8">
           <NavLink href="#/">Inicio</NavLink>
 
-          <Dropdown title="Profesionales">
+          {/* <Dropdown title="Profesionales">
             <DropdownLink href="#/benefits">Beneficios</DropdownLink>
             <DropdownLink href="#/requirements">Requisitos</DropdownLink>
             <DropdownLink href="#/register">Registrarse</DropdownLink>
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
             <DropdownLink href="#/blog">Blog</DropdownLink>
             <DropdownLink href="#/aid">Primeros Auxilios</DropdownLink>
             <DropdownLink href="#/recommendations">Recomendaciones</DropdownLink>
-          </Dropdown>
+          </Dropdown> */}
 
           <NavLink href="#/about">Nosotros</NavLink>
           <a
@@ -158,7 +158,7 @@ const Header: React.FC = () => {
         <div className="lg:hidden bg-petti-base dark:bg-petti-deep-blue/95 pb-4 px-6 space-y-3 animate-fadeInDown">
           <NavLink href="#/" onClick={closeMenu}>Inicio</NavLink>
 
-          <details className="group">
+          {/* <details className="group">
             <summary className="cursor-pointer flex items-center justify-between text-petti-deep-blue dark:text-white hover:text-petti-blue">
               Profesionales
               <ChevronDown className="w-4 h-4 group-open:rotate-180 transition-transform" />
@@ -180,7 +180,7 @@ const Header: React.FC = () => {
               <DropdownLink href="#/aid" onClick={closeMenu}>Primeros Auxilios</DropdownLink>
               <DropdownLink href="#/recommendations" onClick={closeMenu}>Recomendaciones</DropdownLink>
             </div>
-          </details>
+          </details> */}
 
           <NavLink href="#/about" onClick={closeMenu}>Nosotros</NavLink>
           <NavLink href="#/petti-assistant" onClick={closeMenu}>Asistente AI</NavLink>
