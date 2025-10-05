@@ -1,0 +1,53 @@
+@import url('https://rsms.me/inter/inter.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Configuración global */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased; /* Mejora legibilidad */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: #f5f9fb; /* Fondo neutro y SEO-friendly */
+  color: #243b6b; /* Contraste accesible */
+  min-height: 100vh;
+  overflow-x: hidden; /* Evita scroll lateral accidental */
+}
+
+/* Tipografía y selección */
+::selection {
+  background: #6ad1e3; /* Azul Petti */
+  color: white;
+}
+
+/* Enlaces suaves y accesibles */
+a {
+  color: #6ad1e3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #55c0d6;
+}
+
+/* Scrollbar personalizada (opcional, visual) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6ad1e3;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f7f9;
+}
+
