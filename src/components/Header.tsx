@@ -3,11 +3,11 @@ import { Sparkles, ChevronDown, Sun, Moon, LogIn, User, Plus } from 'lucide-reac
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
-const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () => void }> = ({ href, children, onClick }) => (
+const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () => void; className?: string }> = ({ href, children, onClick, className }) => (
   <a
     href={href}
     onClick={onClick}
-    className="block text-petti-deep-blue/80 dark:text-petti-base/80 hover:text-petti-blue dark:hover:text-white font-medium transition-colors duration-300"
+    className={`block text-petti-deep-blue/80 dark:text-petti-base/80 hover:text-petti-blue dark:hover:text-white font-medium transition-colors duration-300 ${className}`}
   >
     {children}
   </a>
@@ -87,16 +87,29 @@ const Header: React.FC = () => {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Close menu when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isMenuOpen && !target.closest('.mobile-menu-container') && !target.closest('.menu-button')) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMenuOpen]);
+
   return (
     <header className="sticky top-0 bg-petti-base/95 dark:bg-petti-deep-blue/95 backdrop-blur-lg z-50 shadow-sm">
-      <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-3 md:py-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex justify-between items-center">
         {/* LOGO */}
         <div className="flex items-center space-x-2 sm:space-x-3">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" onClick={closeMenu}>
             <img
               src="/pettilogo.png"
               alt="Petti Logo"
-              className="w-10 h-10 sm:w-12 sm:h-12 md:h-16 object-contain"
+              className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
             />
             <p className="ml-2 text-base sm:text-lg md:text-xl font-extrabold text-petti-blue dark:text-white leading-tight">PettiWay</p>
           </Link>
@@ -130,20 +143,23 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Mobile menu button */}
-        <div className="lg:hidden flex items-center">
-          {/* {isAuthenticated && (
-            <Link 
-              to="/create-ad" 
-              className="mr-3 p-1.5 rounded-full bg-petti-blue text-white hover:bg-petti-blue/90 transition-colors"
-              aria-label="Crear anuncio"
-            >
-              <Plus className="w-5 h-5" />
-            </Link>
-          )} */}
+        <div className="lg:hidden flex items-center space-x-2">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-petti-light-blue/20 dark:hover:bg-petti-light-blue/10 transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? (
+              <Sun className="w-5 h-5 text-petti-accent" />
+            ) : (
+              <Moon className="w-5 h-5 text-petti-slider-dark" />
+            )}
+          </button>
+          
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-petti-deep-blue dark:text-petti-base hover:text-petti-blue dark:hover:text-white focus:outline-none p-1"
-            aria-label="Toggle menu"
+            className="menu-button text-petti-deep-blue dark:text-petti-base hover:text-petti-blue dark:hover:text-white focus:outline-none p-2"
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? (
@@ -262,14 +278,27 @@ const Header: React.FC = () => {
         role="presentation"
       >
         <div 
-          className={`fixed inset-y-0 right-0 w-4/5 max-w-xs bg-white dark:bg-petti-deep-blue shadow-2xl transform transition-transform duration-300 ease-in-out ${
+          className={`mobile-menu-container fixed inset-y-0 right-0 w-4/5 max-w-xs bg-white dark:bg-petti-deep-blue shadow-2xl transform transition-transform duration-300 ease-in-out ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col h-full overflow-y-auto overscroll-contain">
+            {/* Close button for mobile */}
+            <div className="flex justify-end p-2 lg:hidden">
+              <button
+                onClick={closeMenu}
+                className="p-2 rounded-full hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors"
+                aria-label="Cerrar menú"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
             {/* User Profile Section */}
-            <div className="p-4 border-b border-petti-light-blue/20 dark:border-petti-light-blue/10">
+            <div className="px-4 pt-2 pb-4 border-b border-petti-light-blue/20 dark:border-petti-light-blue/10">
               {isAuthenticated ? (
                 <div className="flex items-center gap-3 mb-4">
                   <div className="relative flex-shrink-0">
@@ -317,46 +346,37 @@ const Header: React.FC = () => {
                 </div>
               )}
             </div>
-            <nav className="flex-1 p-4 space-y-3">
-              <NavLink href="#/" onClick={closeMenu}>
+            <nav className="flex-1 px-4 py-2 space-y-3">
+              <NavLink href="#/" onClick={closeMenu} className="block py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors">
                 Inicio
               </NavLink>
+              <NavLink href="#/about" onClick={closeMenu} className="block py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors">
+                Nosotros
+              </NavLink>
+              <NavLink 
+                href="#/petti-assistant" 
+                onClick={closeMenu}
+                className="flex items-center py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors"
+              >
+                <span className="flex items-center gap-2">
+                  Asistente AI <Sparkles className="w-4 h-4 text-petti-accent flex-shrink-0" />
+                </span>
+              </NavLink>
+              <NavLink href="#/contact" onClick={closeMenu} className="block py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors">
+                Contacto
+              </NavLink>
 
-              {/* <details className="group">
-                <summary className="cursor-pointer flex items-center justify-between text-petti-deep-blue dark:text-white hover:text-petti-blue">
-                  Profesionales
-              <ChevronDown className="w-4 h-4 group-open:rotate-180 transition-transform" />
-            </summary>
-            <div className="ml-4 mt-2 space-y-1">
-              <DropdownLink href="#/benefits" onClick={closeMenu}>Beneficios</DropdownLink>
-              <DropdownLink href="#/requirements" onClick={closeMenu}>Requisitos</DropdownLink>
-              <DropdownLink href="#/register" onClick={closeMenu}>Registrarse</DropdownLink>
-            </div>
-          </details>
-
-          <details className="group">
-            <summary className="cursor-pointer flex items-center justify-between text-petti-deep-blue dark:text-white hover:text-petti-blue">
-              Recursos
-              <ChevronDown className="w-4 h-4 group-open:rotate-180 transition-transform" />
-            </summary>
-            <div className="ml-4 mt-2 space-y-1">
-              <DropdownLink href="#/blog" onClick={closeMenu}>Blog</DropdownLink>
-              <DropdownLink href="#/aid" onClick={closeMenu}>Primeros Auxilios</DropdownLink>
-              <DropdownLink href="#/recommendations" onClick={closeMenu}>Recomendaciones</DropdownLink>
-            </div>
-          </details> */}
-
-          <NavLink href="#/about" onClick={closeMenu}>Nosotros</NavLink>
-          <NavLink href="#/petti-assistant" onClick={closeMenu}>Asistente AI</NavLink>
-          <NavLink href="#/contact" onClick={closeMenu}>Contacto</NavLink>
-
-          <a
-            href="#/signup"
-            onClick={closeMenu}
-            className="block mt-4 text-center bg-petti-blue text-white px-5 py-2.5 rounded-xl font-bold hover:opacity-90"
-          >
-            Únete
-          </a>
+              {!isAuthenticated && (
+                <div className="pt-2">
+                  <Link
+                    to="/signup"
+                    onClick={closeMenu}
+                    className="block w-full text-center bg-petti-blue text-white px-5 py-2.5 rounded-xl font-bold hover:opacity-90 transition-opacity"
+                  >
+                    Regístrate gratis
+                  </Link>
+                </div>
+              )}
             </nav>
             
             {isAuthenticated && (
