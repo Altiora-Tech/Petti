@@ -16,6 +16,8 @@ export default {
         'petti-light-blue': '#A9CBE0',
         'petti-slider': '#f4f8fb',
         'petti-slider-dark': '#1d3a50',
+        'petti-text-light': '#243b6b',
+        'petti-text-dark': '#fff',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],

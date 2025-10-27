@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
-import { Cuidador } from '../../types';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Cuidador } from '../types';
 import { Star, ShieldCheck, Search, MapPin, ShowerHead, Footprints, Hospital } from 'lucide-react';
 import { FaPaw } from 'react-icons/fa';
+
+// Helper function to generate optimized image URLs
+const getOptimizedImageUrl = (url: string, width = 500, quality = 80) => {
+  if (!url) return '';
+  
+  // If using ImgBB, we can add parameters to optimize the image
+  if (url.includes('i.ibb.co')) {
+    return `${url}${url.includes('?') ? '&' : '?'}width=${width}&quality=${quality}&format=webp`;
+  }
+  
+  return url;
+};
 
 const cuidadores: Cuidador[] = [
   { id: 1, name: 'Ana Pérez', imageUrl: 'https://i.ibb.co/PGk7cBn5/ana.jpg', rating: 4.9, reviews: 120, services: ['Paseos', 'Guardería'], priceRange: '$10 - $30', verified: true },
@@ -23,20 +36,64 @@ const ServiceIcon: React.FC<{ service: string }> = ({ service }) => {
     }
 }
 
-const CuidadorCard: React.FC<{ cuidador: Cuidador }> = ({ cuidador }) => (
-    <div className="bg-white dark:bg-petti-deep-blue/80 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-        <img 
-         src={cuidador.imageUrl} 
-         alt={cuidador.name} 
-         name="cuidador"
-         aria-label="cuidador"
-         width={500}
-         height={500}
-         className="w-full h-48 object-cover" />
+const CuidadorCard: React.FC<{ cuidador: Cuidador }> = ({ cuidador }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [imageSrc, setImageSrc] = useState('');
+  
+  useEffect(() => {
+    // Preload image
+    const img = new Image();
+    img.src = getOptimizedImageUrl(cuidador.imageUrl, 600, 90);
+    
+    img.onload = () => {
+      setImageSrc(img.src);
+      setIsLoading(false);
+    };
+    
+    img.onerror = () => {
+      console.error('Error loading image:', cuidador.imageUrl);
+      setImageSrc(cuidador.imageUrl); // Fallback to original URL
+      setIsLoading(false);
+    };
+    
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [cuidador.imageUrl]);
+  
+  return (
+    <div className="bg-white dark:bg-petti-deep-blue/80 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-xl">
+      <div className="relative w-full h-48 bg-petti-light-blue/20 dark:bg-petti-light-blue/5">
+        {!isLoading && imageSrc && (
+          <img
+            src={imageSrc}
+            aria-label={`${cuidador.name}, cuidador de mascotas`}
+            alt={`${cuidador.name}, cuidador de mascotas`}
+            loading="lazy"
+            className="w-full h-full object-cover transition-opacity duration-500"
+            style={{ opacity: isLoading ? 0 : 1 }}
+          />
+        )}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="animate-pulse flex space-x-2">
+              <div className="w-3 h-3 bg-petti-blue/30 rounded-full"></div>
+              <div className="w-3 h-3 bg-petti-blue/50 rounded-full"></div>
+              <div className="w-3 h-3 bg-petti-blue/70 rounded-full"></div>
+            </div>
+          </div>
+        )}
+      </div>
         <div className="p-6">
             <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold text-petti-deep-blue dark:text-white">{cuidador.name}</h3>
-                {cuidador.verified && <ShieldCheck className="w-6 h-6 text-petti-blue" title="Verificado" />}
+                {cuidador.verified && (
+                  <span className="flex items-center" title="Verificado">
+                    <ShieldCheck className="w-6 h-6 text-petti-blue" aria-hidden="true" />
+                    <span className="sr-only">Verificado</span>
+                  </span>
+                )}
             </div>
             <div className="flex items-center mt-2 text-sm text-petti-deep-blue/70 dark:text-petti-base/70">
                 <Star className="w-5 h-5 text-petti-accent" />
@@ -57,7 +114,8 @@ const CuidadorCard: React.FC<{ cuidador: Cuidador }> = ({ cuidador }) => (
             </div>
         </div>
     </div>
-);
+    );
+}
 
 const Cuidadores: React.FC = () => {
     // Basic filtering state - can be expanded
@@ -95,15 +153,14 @@ const Cuidadores: React.FC = () => {
                                 <input type="text" id="location" placeholder="Ciudad o código postal" className="w-full pl-10 pr-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" />
                             </div>
                         </div>
-                        <button 
-                            name="button"
-                            id="button"
-                            aria-label="button"
-                            href="#/sitters" 
-                            type="button"
-                            className="w-full md:w-auto lg:w-full bg-petti-blue text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-transform hover:scale-105 flex-shrink-0 shadow-lg flex items-center justify-center gap-2">
-                           <Search className="w-5 h-5" /> Buscar
-                        </button>
+                        <Link 
+                            to="/sitters"
+                            className="w-full md:w-auto lg:w-full bg-petti-blue text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-transform hover:scale-105 flex-shrink-0 shadow-lg flex items-center justify-center gap-2"
+                            role="button"
+                            aria-label="Buscar cuidadores"
+                        >
+                            <Search className="w-5 h-5" /> Buscar
+                        </Link>
                     </div>
                 </div>
 

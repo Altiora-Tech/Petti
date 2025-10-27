@@ -62,7 +62,7 @@ const ProfesionalesRequisitos: React.FC = () => {
                     <h2 className="text-2xl font-bold text-petti-deep-blue dark:text-white">¿Cumples con los requisitos?</h2>
                     <p className="mt-2 text-petti-deep-blue/70 dark:text-petti-base/70">¡Perfecto! Nos encantaría tenerte en nuestra comunidad.</p>
                     <a href="#/register" className="mt-6 inline-block bg-petti-blue text-white px-10 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-transform hover:scale-105 shadow-lg">
-                        Únete a Petti
+                        Únete a PettiWay
                     </a>
                 </div>
             </div>

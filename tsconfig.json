@@ -11,7 +11,11 @@
     ],
     "skipLibCheck": true,
     "types": [
-      "node"
+      "node",
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
     ],
     "moduleResolution": "bundler",
     "isolatedModules": true,
@@ -24,6 +28,10 @@
       ]
     },
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

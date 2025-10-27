@@ -71,7 +71,7 @@ const ProfesionalesBeneficios: React.FC = () => {
               Comenzar ahora
             </a>
             <p className="mt-8 text-sm text-petti-deep-blue/60 dark:text-petti-base/60">
-                ¿Tienes preguntas? <a href="#/requirements" className="font-semibold text-petti-blue underline">Consulta nuestros requisitos</a>.
+                ¿Tienes preguntas? <a href="#/requirements" className="font-semibold text-petti-blue hover:bg-petti-blue/90">Consulta nuestros requisitos</a>.
             </p>
         </div>
       </div>

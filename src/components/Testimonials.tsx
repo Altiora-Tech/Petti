@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Testimonial } from '../../types';
+import { Testimonial } from '../types';
 
 const testimonials: Testimonial[] = [
   {
@@ -49,7 +49,7 @@ const Rating: React.FC<{ rating: number }> = ({ rating }) => (
 );
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = React.forwardRef<HTMLDivElement, { testimonial: Testimonial }>(({ testimonial }, ref) => (
-    <div ref={ref} className="bg-white dark:bg-petti-deep-blue/80 p-8 rounded-2xl shadow-lg h-full flex flex-col justify-between flex-shrink-0 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+    <div ref={ref} className="bg-white dark:bg-petti-deep-blue/80 p-8 rounded-2xl shadow-lg dark:shadow-xl h-full flex flex-col justify-between flex-shrink-0 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
         <div>
             <Rating rating={testimonial.rating} />
             <p className="text-petti-deep-blue/80 dark:text-petti-base/80 mt-4">"{testimonial.quote}"</p>
@@ -59,10 +59,9 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = React.forwardRef
               src={testimonial.avatarUrl} 
               alt={testimonial.author} 
               className="w-12 h-12 rounded-full object-cover" 
-              name={testimonial.author}
               aria-label={testimonial.author}
-              width={500}
-              height={500}
+              width={48}
+              height={48}
             />
             <div className="ml-4">
                 <p className="font-bold text-petti-deep-blue dark:text-white">{testimonial.author}</p>
@@ -81,7 +80,7 @@ const Testimonials: React.FC = () => {
   const [visibleItems, setVisibleItems] = useState(1);
 
   const calculateMetrics = useCallback(() => {
-    if (carouselInnerRef.current?.children.length > 0) {
+    if (carouselInnerRef.current?.children && carouselInnerRef.current.children.length > 0) {
       if (window.innerWidth >= 1024) {
         setVisibleItems(3);
       } else if (window.innerWidth >= 640) {
@@ -91,11 +90,13 @@ const Testimonials: React.FC = () => {
       }
 
       if (carouselInnerRef.current.children.length > 1) {
-        const firstCard = carouselInnerRef.current.children[0] as HTMLElement;
-        const secondCard = carouselInnerRef.current.children[1] as HTMLElement;
-        setSlideOffset(secondCard.offsetLeft - firstCard.offsetLeft);
+        const firstCard = carouselInnerRef.current?.children[0] as HTMLElement;
+        const secondCard = carouselInnerRef.current?.children[1] as HTMLElement;
+        if (firstCard && secondCard) {
+          setSlideOffset(secondCard.offsetLeft - firstCard.offsetLeft);
+        }
       } else {
-        const firstCard = carouselInnerRef.current.children[0] as HTMLElement;
+        const firstCard = carouselInnerRef.current?.children[0] as HTMLElement;
         setSlideOffset(firstCard.offsetWidth);
       }
     }
@@ -148,7 +149,7 @@ const Testimonials: React.FC = () => {
           <div className="overflow-hidden" ref={carouselRef}>
              <div 
               ref={carouselInnerRef}
-              className="flex gap-6 p-2 items-stretch transition-transform duration-500 ease-out"
+              className="flex gap-6 p-2 items-stretch transition-transform duration-500 ease-out dark:bg-petti-deep-blue/40"
               style={{ transform: `translateX(-${currentIndex * slideOffset}px)` }}
              >
                 {testimonials.map((testimonial, index) => (

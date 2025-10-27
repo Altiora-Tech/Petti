@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI, Chat } from "@google/genai";
-import { ChatMessage } from '../../types';
+import { ChatMessage } from '../types';
 import { Sparkles, Send } from 'lucide-react';
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 

@@ -46,11 +46,11 @@ const Hero: React.FC = () => {
             />
             <button 
                 type="button"
-                name="button"
-                id="button"
-                href='#/sitters'
-                aria-label="button"
-                className="bg-petti-blue text-white px-8 py-3.5 rounded-xl font-bold hover:opacity-90 transition-transform hover:scale-105 flex-shrink-0 shadow-lg hover:shadow-xl">
+                id="find-sitters-button"
+                aria-label="Buscar cuidadores de mascotas"
+                className="bg-petti-blue text-white px-8 py-3.5 rounded-xl font-bold hover:opacity-90 transition-transform hover:scale-105 flex-shrink-0 shadow-lg hover:shadow-xl"
+                onClick={() => window.location.href = '#/sitters'}
+            >
               Buscar Cuidadores
             </button>
           </div>
@@ -75,7 +75,6 @@ const Hero: React.FC = () => {
                 alt="Mascota feliz de Petti"
                 width={500}
                 height={500}
-                name="Mascota feliz de Petti"
                 aria-label="Mascota feliz de Petti"
                 className="w-full h-auto max-h-full object-contain transform transition-all duration-500 hover:scale-105"
                 loading="eager"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart, ShieldCheck } from 'lucide-react';
 import { FaPaw } from 'react-icons/fa';
-import { Feature } from '../../types';
+import { Feature } from '../types';
 
 const features: Feature[] = [
     {

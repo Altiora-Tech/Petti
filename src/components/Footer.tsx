@@ -1,8 +1,19 @@
 import React from 'react';
 import { Twitter, Instagram, Facebook } from 'lucide-react';
 
-const FooterLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
-  <a href={href} className="text-petti-deep-blue/60 dark:text-petti-base/60 hover:text-petti-blue dark:hover:text-white transition-colors">{children}</a>
+interface FooterLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  href: string;
+  children: React.ReactNode;
+}
+
+const FooterLink: React.FC<FooterLinkProps> = ({ href, children, className = '', ...props }) => (
+  <a 
+    href={href} 
+    className={`text-petti-deep-blue/60 dark:text-petti-base/60 hover:text-petti-blue dark:hover:text-white transition-colors ${className}`}
+    {...props}
+  >
+    {children}
+  </a>
 );
 
 const Footer: React.FC = () => {
@@ -14,15 +25,14 @@ const Footer: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center sm:text-left">
           <img 
             src="/pettilogo.png"
-            aria-label="Logo Petti"
-            name="Logo Petti"
             alt="Logo Petti"
             width={500}
             height={500}
             className="w-24 h-24 sm:w-28 sm:h-28 object-contain"
+            aria-hidden="true"
           />
           <h3 className="text-lg sm:text-xl font-extrabold text-petti-blue dark:text-white leading-tight">
-            Petti App
+            PettiWay
           </h3>
         </div>
             <p className="mt-4 text-petti-deep-blue/60 dark:text-petti-base/60 text-sm">
@@ -62,9 +72,7 @@ const Footer: React.FC = () => {
                 <button 
                   type="submit"
                   name="submit"
-                  aria-label="submit"
-                  id="submit"
-                  required
+                  aria-label="Enviar suscripción"
                   className="bg-petti-blue text-white px-4 py-2 rounded-r-lg font-bold hover:opacity-90 flex-shrink-0"
                   >
                     Ir

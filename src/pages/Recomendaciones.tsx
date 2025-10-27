@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tip } from '../../types';
+import { Tip } from '../types';
 import { Bone, Brain, GlassWater, Activity, CloudDrizzle } from 'lucide-react';
 import { FaPaw } from 'react-icons/fa';
 import { HiAcademicCap } from "react-icons/hi";

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FirstAidTopic } from '../../types';
+import { FirstAidTopic } from '../types';
 import { XCircle, Beaker } from "lucide-react";
 import { FaFirstAid } from "react-icons/fa";
 import { FaBandage } from "react-icons/fa6";

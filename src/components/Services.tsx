@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hospital, ShowerHead, Footprints } from 'lucide-react';
 import { FaPaw } from 'react-icons/fa';
-import { Service } from '../../types';
+import { Service } from '../types';
 
 const services: Service[] = [
   {

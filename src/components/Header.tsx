@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Sparkles, ChevronDown, Sun, Moon, LogIn, User, Plus } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () => void }> = ({ href, children, onClick }) => (
   <a
@@ -67,8 +69,15 @@ const DropdownLink: React.FC<{ href: string; children: React.ReactNode; onClick?
 );
 
 const Header: React.FC = () => {
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') === 'dark';
+    }
+    return false;
+  });
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode);
@@ -79,20 +88,22 @@ const Header: React.FC = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="sticky top-0 bg-petti-base/80 dark:bg-petti-deep-blue/80 backdrop-blur-lg z-50 shadow-sm">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+    <header className="sticky top-0 bg-petti-base/95 dark:bg-petti-deep-blue/95 backdrop-blur-lg z-50 shadow-sm">
+      <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-3 md:py-4 flex justify-between items-center">
         {/* LOGO */}
-        <div className="flex items-center space-x-3">
-          <img
-            src="/pettilogo.png"
-            alt="Petti Logo"
-            className="w-auto h-12 sm:h-16 object-contain"
-          />
-          <p className="text-lg sm:text-xl font-extrabold text-petti-blue dark:text-white leading-tight">Petti App</p>
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <Link to="/" className="flex items-center">
+            <img
+              src="/pettilogo.png"
+              alt="Petti Logo"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:h-16 object-contain"
+            />
+            <p className="ml-2 text-base sm:text-lg md:text-xl font-extrabold text-petti-blue dark:text-white leading-tight">PettiWay</p>
+          </Link>
         </div>
 
         {/* NAV DESKTOP */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
           <NavLink href="#/">Inicio</NavLink>
 
           {/* <Dropdown title="Profesionales">
@@ -118,49 +129,202 @@ const Header: React.FC = () => {
           <NavLink href="#/contact">Contacto</NavLink>
         </nav>
 
-        {/* BOTONES */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full text-petti-deep-blue dark:text-petti-base hover:bg-petti-light-blue/20 dark:hover:bg-petti-light-blue/10 transition"
-            aria-label="Cambiar tema"
-          >
-            {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-          </button>
-
-          <a
-            href="#/register"
-            className="hidden sm:block bg-petti-blue text-white px-5 py-2.5 rounded-xl font-bold hover:opacity-90 transition-transform hover:scale-105"
-          >
-            Únete
-          </a>
-
-          {/* BOTÓN MENÚ */}
+        {/* Mobile menu button */}
+        <div className="lg:hidden flex items-center">
+          {/* {isAuthenticated && (
+            <Link 
+              to="/create-ad" 
+              className="mr-3 p-1.5 rounded-full bg-petti-blue text-white hover:bg-petti-blue/90 transition-colors"
+              aria-label="Crear anuncio"
+            >
+              <Plus className="w-5 h-5" />
+            </Link>
+          )} */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-petti-deep-blue dark:text-white"
-            aria-label="Abrir menú"
+            className="text-petti-deep-blue dark:text-petti-base hover:text-petti-blue dark:hover:text-white focus:outline-none p-1"
+            aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16m-7 6h7'}
-              />
-            </svg>
+            {isMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* BOTONES */}
+        <div className="hidden lg:flex items-center gap-4">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-petti-light-blue/20 dark:hover:bg-petti-light-blue/10 transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? (
+              <Sun className="w-5 h-5 text-petti-accent" />
+            ) : (
+              <Moon className="w-5 h-5 text-petti-slider-dark" />
+            )}
+          </button>
+          
+          {isAuthenticated ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                className="flex items-center gap-2 p-1 rounded-full hover:bg-petti-light-blue/20 dark:hover:bg-petti-light-blue/10 transition-colors"
+                aria-label="Perfil de usuario"
+              >
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.name || 'Usuario'}
+                    className="w-9 h-9 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-9 h-9 rounded-full bg-petti-blue/10 dark:bg-petti-light-blue/20 flex items-center justify-center">
+                    <User className="w-5 h-5 text-petti-blue dark:text-petti-light-blue" />
+                  </div>
+                )}
+              </button>
+              
+              {isProfileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-petti-deep-blue/95 backdrop-blur-sm rounded-lg shadow-lg p-2 z-50">
+                  <div className="px-4 py-3 border-b border-petti-light-blue/20 dark:border-petti-light-blue/10">
+                    <p className="text-sm font-medium text-petti-deep-blue dark:text-white truncate">
+                      {user?.name || 'Usuario'}
+                    </p>
+                    <p className="text-xs text-petti-deep-blue/60 dark:text-petti-base/60 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
+                  <div className="py-1">
+                    <DropdownLink href="#/profile">Mi perfil</DropdownLink>
+                    <DropdownLink href="#/my-ads">Mis anuncios</DropdownLink>
+                    <DropdownLink href="#/settings">Configuración</DropdownLink>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsProfileMenuOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                    >
+                      Cerrar sesión
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link 
+              to="/login"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-petti-blue hover:bg-petti-blue/10 dark:hover:bg-petti-light-blue/10 transition-colors"
+            >
+              <LogIn className="w-5 h-5" />
+              Iniciar sesión
+            </Link>
+          )}
+          
+          {/* <button 
+            className="flex items-center gap-2 bg-petti-blue hover:bg-petti-blue/90 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            aria-label="Publicar anuncio"
+          >
+            <span className="hidden sm:inline">Publicar anuncio</span>
+            <Plus className="w-5 h-5" />
+          </button> */}
+          
+          {/* Botón de menú móvil */}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="lg:hidden p-2 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors"
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? (
+              <span className="text-2xl">×</span>
+            ) : (
+              <span className="text-2xl">☰</span>
+            )}
           </button>
         </div>
       </div>
 
-      {/* NAV MÓVIL */}
-      {isMenuOpen && (
-        <div className="lg:hidden bg-petti-base dark:bg-petti-deep-blue/95 pb-4 px-6 space-y-3 animate-fadeInDown">
-          <NavLink href="#/" onClick={closeMenu}>Inicio</NavLink>
+      {/* Mobile Navigation Menu */}
+      <div 
+        className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ease-in-out ${
+          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={closeMenu}
+        role="presentation"
+      >
+        <div 
+          className={`fixed inset-y-0 right-0 w-4/5 max-w-xs bg-white dark:bg-petti-deep-blue shadow-2xl transform transition-transform duration-300 ease-in-out ${
+            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex flex-col h-full overflow-y-auto overscroll-contain">
+            {/* User Profile Section */}
+            <div className="p-4 border-b border-petti-light-blue/20 dark:border-petti-light-blue/10">
+              {isAuthenticated ? (
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="relative flex-shrink-0">
+                    <img
+                      src={user?.avatar || '/default-avatar.png'}
+                      onError={(e) => { e.currentTarget.src = '/default-avatar.png'; }}
+                      alt={user?.name || 'Usuario'}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-petti-blue/20"
+                      width={48}
+                      height={48}
+                      loading="lazy"
+                    />
+                    <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-petti-deep-blue" aria-hidden="true"></span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-petti-deep-blue dark:text-white truncate">
+                      {user?.name || 'Usuario'}
+                    </p>
+                    <p className="text-sm text-petti-deep-blue/60 dark:text-petti-base/60 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <Link
+                    to="/login"
+                    className="w-full text-center py-3 px-4 rounded-lg font-medium text-petti-blue 
+                      hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/10 
+                      active:bg-petti-light-blue/20 transition-colors duration-200
+                      focus:outline-none focus:ring-2 focus:ring-petti-blue/50"
+                    onClick={closeMenu}
+                  >
+                    Iniciar sesión
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="w-full text-center py-3 px-4 bg-petti-blue text-white rounded-lg font-medium 
+                      hover:bg-petti-blue/90 active:bg-petti-blue/800 
+                      transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-petti-blue/50"
+                    onClick={closeMenu}
+                  >
+                    Registrarse
+                  </Link>
+                </div>
+              )}
+            </div>
+            <nav className="flex-1 p-4 space-y-3">
+              <NavLink href="#/" onClick={closeMenu}>
+                Inicio
+              </NavLink>
 
-          {/* <details className="group">
-            <summary className="cursor-pointer flex items-center justify-between text-petti-deep-blue dark:text-white hover:text-petti-blue">
-              Profesionales
+              {/* <details className="group">
+                <summary className="cursor-pointer flex items-center justify-between text-petti-deep-blue dark:text-white hover:text-petti-blue">
+                  Profesionales
               <ChevronDown className="w-4 h-4 group-open:rotate-180 transition-transform" />
             </summary>
             <div className="ml-4 mt-2 space-y-1">
@@ -187,14 +351,30 @@ const Header: React.FC = () => {
           <NavLink href="#/contact" onClick={closeMenu}>Contacto</NavLink>
 
           <a
-            href="#/register"
+            href="#/signup"
             onClick={closeMenu}
             className="block mt-4 text-center bg-petti-blue text-white px-5 py-2.5 rounded-xl font-bold hover:opacity-90"
           >
             Únete
           </a>
+            </nav>
+            
+            {isAuthenticated && (
+              <div className="p-4 border-t border-petti-light-blue/20 mt-auto">
+                <button
+                  onClick={() => {
+                    logout();
+                    closeMenu();
+                  }}
+                  className="w-full text-left py-2 px-4 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };

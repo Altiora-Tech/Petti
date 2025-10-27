@@ -93,7 +93,8 @@ petti/
 3. Configura las variables de entorno
    Crea un archivo `.env.local` en la raíz del proyecto con:
    ```
-   REACT_APP_API_URL=http://localhost:5000
+   VITE_API_URL=http://localhost:3000
+   VITE_GOOGLE_CLIENT_ID=your_google_client_id
    # Otras variables de entorno necesarias
    ```
 

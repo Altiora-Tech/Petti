@@ -3,6 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Altiora Tech",
+  "license": "MIT",
+  "description": "PettiWay - The Pet Care App",
+  "git": {
+    "url": "https://github.com/AltioraTech/petti.git",
+    "branch": "main"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,14 +17,20 @@
   },
   "dependencies": {
     "@google/genai": "^1.22.0",
+    "@react-oauth/google": "^0.12.2",
+    "@tanstack/react-query": "^5.90.5",
+    "axios": "^1.12.2",
     "lucide-react": "^0.417.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.3"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.18.12",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
