@@ -101,17 +101,6 @@ export default function RegisterPage() {
               Únete a PettiWay como cuidador profesional
             </p>
           </div>
-          <div className="mt-6">
-            <button
-              type="button"
-              onClick={handleGoogleRegister}
-              className="w-full flex justify-center items-center py-3 px-4 border border-petti-light-blue/50 dark:border-petti-light-blue/30 rounded-xl text-sm font-medium text-petti-text-light dark:text-white hover:bg-petti-base/50 dark:hover:bg-petti-light-blue/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-petti-blue"
-            >
-              <FcGoogle className="h-5 w-5 mr-2" />
-              Registrarse con Google
-            </button>
-          </div>
-
           <div className="relative mt-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-petti-light-blue/30 dark:border-petti-light-blue/20" />

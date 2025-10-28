@@ -5,29 +5,10 @@
     <link rel="icon" type="image/png" href="/pettilogo.png" sizes="192x192" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Petti - Cuidado de mascotas de confianza</title>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-    <!-- <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-      @import url('https://rsms.me/inter/inter.css');
-      
-      @keyframes scroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-
-      .animate-scroll {
-        animation: scroll 40s linear infinite;
-      }
-    </style> -->
     <script>
       // Evita el FOUC (Flash of Unstyled Content) para el tema oscuro
       if (localStorage.getItem('petti-theme') === 'dark' || (!('petti-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -36,43 +17,10 @@
         document.documentElement.classList.remove('dark')
       }
     </script>
-    <!-- <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              'petti-blue': '#6AD1E3',
-              'petti-deep-blue': '#243B6B',
-              'petti-base': '#F5F9FB',
-              'petti-accent': '#FFD66B',
-              'petti-pink': '#FFB6C1',
-              'petti-light-blue': '#A9CBE0',
-            },
-          },
-        },
-      }
-    </script> -->
-  <!-- <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.22.0"
-  }
-}
-</script> -->
-<link rel="stylesheet" href="/index.css">
-</head>
+    <link rel="stylesheet" href="src/index.css">
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
-    <!-- <script type="text/javascript">
-      Calendly.initWidget({
-        url: 'https://calendly.com/petti/petti-appointment',
-        parentElement: document.getElementById('calendly-widget'),
-      });
-    </script> -->
   </body>
 </html>

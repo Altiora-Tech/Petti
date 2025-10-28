@@ -25,12 +25,11 @@ const LoginPage: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // 🔹 Recuperar usuario guardado en localStorage al cargar
+  // No auto-login - user must explicitly log in
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-    }
+    // Clear any existing user data to force login
+    localStorage.removeItem('user');
+    setCurrentUser(null);
   }, []);
 
   // 🔹 Manejo de login con Google
@@ -167,21 +166,28 @@ const LoginPage: React.FC = () => {
                   onScriptLoadError={() => setGoogleError('Error al cargar Google Sign-In. Por favor, recarga la página.')}
                 >
                   <div className="w-full max-w-md mx-auto">
-                    <div className="w-full rounded-xl bg-petti-light-blue" style={{ minWidth: '300px' }}>
-                      <GoogleLogin
-                        onSuccess={handleGoogleSuccess}
-                        onError={handleGoogleError}
-                        useOneTap
-                        auto_select
-                        text="continue_with"
-                        theme="outline"
-                        size="large"
-                        width="100%"
-                        shape="rectangular"
-                        locale="es"
-                        ux_mode="popup"
-                        use_fedcm_for_prompt={false}
-                      />
+                    <div className="w-full" style={{ minWidth: '300px' }}>
+                      <div className="google-button-container" style={{
+                        width: '100%',
+                        borderRadius: '0.75rem',
+                        overflow: 'hidden',
+                        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                        border: '1px solid #d1d5db'
+                      }}>
+                        <GoogleLogin
+                          onSuccess={handleGoogleSuccess}
+                          onError={handleGoogleError}
+                          useOneTap={false}
+                          auto_select={false}
+                          text="continue_with"
+                          theme="outline"
+                          size="large"
+                          width="100%"
+                          shape="rectangular"
+                          locale="es"
+                          ux_mode="popup"
+                        />
+                      </div>
                     </div>
                     {googleError && (
                       <p className="mt-2 text-sm text-red-600 dark:text-red-400 text-center w-full">
