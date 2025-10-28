@@ -3,11 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { FaPaw } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
+import { FcGoogle } from 'react-icons/fc';
 
 // Extend ImportMeta interface to include env
 declare global {
   interface ImportMeta {
     env: {
+      VITE_API_URL: string;
       VITE_GOOGLE_CLIENT_ID: string;
     };
   }
@@ -165,35 +167,23 @@ const LoginPage: React.FC = () => {
                   clientId={GOOGLE_CLIENT_ID}
                   onScriptLoadError={() => setGoogleError('Error al cargar Google Sign-In. Por favor, recarga la página.')}
                 >
-                  <div className="w-full max-w-md mx-auto">
-                    <div className="w-full" style={{ minWidth: '300px' }}>
-                      <div className="google-button-container" style={{
-                        width: '100%',
-                        borderRadius: '0.75rem',
-                        overflow: 'hidden',
-                        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-                        border: '1px solid #d1d5db'
-                      }}>
-                        <GoogleLogin
-                          onSuccess={handleGoogleSuccess}
-                          onError={handleGoogleError}
-                          useOneTap={false}
-                          auto_select={false}
-                          text="continue_with"
-                          theme="outline"
-                          size="large"
-                          width="100%"
-                          shape="rectangular"
-                          locale="es"
-                          ux_mode="popup"
-                        />
-                      </div>
+                  <div className="w-full">
+                    <div 
+                      className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-petti-light-blue/40 bg-white dark:bg-petti-slider-dark/50 shadow-sm hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-all duration-200 cursor-pointer"
+                      onClick={() => {
+                        const google = (window as any).google;
+                        if (google) {
+                          google.accounts.id.prompt();
+                        } else {
+                          setGoogleError('Error al cargar Google. Por favor, recarga la página.');
+                        }
+                      }}
+                    >
+                      <FcGoogle className="w-5 h-5" />
+                      <span className="font-medium text-petti-deep-blue dark:text-white text-sm">
+                        Continuar con Google
+                      </span>
                     </div>
-                    {googleError && (
-                      <p className="mt-2 text-sm text-red-600 dark:text-red-400 text-center w-full">
-                        {googleError}
-                      </p>
-                    )}
                   </div>
                 </GoogleOAuthProvider>
               ) : (
