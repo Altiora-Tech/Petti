@@ -101,8 +101,8 @@ const Header: React.FC = () => {
   }, [isMenuOpen]);
 
   return (
-    <header className="sticky top-0 bg-petti-base/95 dark:bg-petti-deep-blue/95 backdrop-blur-lg z-50 shadow-sm">
-      <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex justify-between items-center">
+    <header className="fixed top-0 left-0 right-0 bg-petti-base/95 dark:bg-petti-deep-blue/95 backdrop-blur-lg z-[1000] shadow-sm h-16 flex items-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
         {/* LOGO */}
         <div className="flex items-center space-x-2 sm:space-x-3">
           <Link to="/" className="flex items-center" onClick={closeMenu}>
@@ -269,31 +269,121 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Menu - Dropdown */}
       <div 
-        className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ease-in-out ${
-          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`lg:hidden fixed top-16 left-0 right-0 z-40 transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
         }`}
-        onClick={closeMenu}
-        role="presentation"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú de navegación"
       >
         <div 
-          className={`mobile-menu-container fixed inset-y-0 right-0 w-4/5 max-w-xs bg-white dark:bg-petti-deep-blue shadow-2xl transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className="bg-white dark:bg-petti-deep-blue shadow-lg rounded-b-xl mx-4 overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col h-full overflow-y-auto overscroll-contain">
-            {/* Close button for mobile */}
-            <div className="flex justify-end p-2 lg:hidden">
-              <button
+            {/* Menu Header */}
+            <div className="p-4 border-b border-petti-light-blue/20 dark:border-petti-light-blue/10">
+              <h3 className="text-lg font-semibold text-petti-deep-blue dark:text-white">Menú de navegación</h3>
+            </div>
+            
+            {/* Navigation Links */}
+            <nav className="flex-1 px-4 py-2 space-y-1">
+              <a 
+                href="#/" 
+                className="block py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue/80 dark:text-petti-base/80 hover:text-petti-blue dark:hover:text-white font-medium"
                 onClick={closeMenu}
-                className="p-2 rounded-full hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors"
-                aria-label="Cerrar menú"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                Inicio
+              </a>
+              
+              <a 
+                href="#/about" 
+                className="block py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue/80 dark:text-petti-base/80 hover:text-petti-blue dark:hover:text-white font-medium"
+                onClick={closeMenu}
+              >
+                Nosotros
+              </a>
+              
+              <a 
+                href="#/petti-assistant" 
+                className="flex items-center py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue/80 dark:text-petti-base/80 hover:text-petti-blue dark:hover:text-white font-medium"
+                onClick={closeMenu}
+              >
+                <span className="flex items-center gap-2">
+                  Asistente AI 
+                  <Sparkles className="w-4 h-4 text-petti-accent flex-shrink-0" />
+                </span>
+              </a>
+              
+              <a 
+                href="#/contact" 
+                className="block py-2.5 px-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue/80 dark:text-petti-base/80 hover:text-petti-blue dark:hover:text-white font-medium"
+                onClick={closeMenu}
+              >
+                Contacto
+              </a>
+              
+              {!isAuthenticated ? (
+                <div className="space-y-2">
+                  <a
+                    href="#/login"
+                    className="flex items-center px-4 py-3 rounded-lg bg-petti-blue text-white font-medium hover:opacity-90 transition-colors justify-center"
+                    onClick={closeMenu}
+                  >
+                    <LogIn className="w-5 h-5 mr-2" />
+                    Iniciar sesión
+                  </a>
+                  <a
+                    href="#/signup"
+                    className="flex items-center px-4 py-3 rounded-lg border-2 border-petti-blue text-petti-blue dark:text-white font-medium hover:bg-petti-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors justify-center"
+                    onClick={closeMenu}
+                  >
+                    <User className="w-5 h-5 mr-2" />
+                    Registrarse
+                  </a>
+                </div>
+              ) : (
+                <div className="mt-2 space-y-2">
+                  <a
+                    href="#/profile"
+                    className="flex items-center px-4 py-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue dark:text-white font-medium"
+                    onClick={closeMenu}
+                  >
+                    <User className="w-5 h-5 mr-2" />
+                    Mi perfil
+                  </a>
+                  <button
+                    onClick={() => {
+                      logout();
+                      closeMenu();
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue dark:text-white font-medium"
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </nav>
+            
+            {/* Theme Toggle in Mobile Menu */}
+            <div className="p-4 border-t border-petti-light-blue/10 dark:border-petti-light-blue/20">
+              <button
+                onClick={toggleTheme}
+                className="flex items-center w-full px-4 py-3 rounded-lg hover:bg-petti-light-blue/10 dark:hover:bg-petti-light-blue/20 transition-colors text-petti-deep-blue dark:text-white font-medium"
+              >
+                {isDarkMode ? (
+                  <>
+                    <Sun className="w-5 h-5 mr-2 text-petti-accent" />
+                    Modo claro
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-5 h-5 mr-2 text-petti-slider-dark" />
+                    Modo oscuro
+                  </>
+                )}
               </button>
             </div>
             
@@ -366,7 +456,7 @@ const Header: React.FC = () => {
                 Contacto
               </NavLink>
 
-              {!isAuthenticated && (
+              {/* {!isAuthenticated && (
                 <div className="pt-2">
                   <Link
                     to="/signup"
@@ -376,7 +466,7 @@ const Header: React.FC = () => {
                     Regístrate gratis
                   </Link>
                 </div>
-              )}
+              )} */}
             </nav>
             
             {isAuthenticated && (

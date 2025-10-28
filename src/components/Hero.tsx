@@ -23,13 +23,13 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="hero" className="bg-petti-base dark:bg-petti-deep-blue relative overflow-hidden">
+    <section id="hero" className="bg-petti-base dark:bg-petti-deep-blue relative overflow-hidden pt-24 md:pt-0">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -right-30 w-80 h-80 bg-petti-blue/10 dark:bg-petti-light-blue/5 rounded-full filter blur-3xl"></div>
         <div className="absolute -left-10 w-96 h-96 bg-petti-pink/10 dark:bg-petti-pink/5 rounded-full filter blur-3xl"></div>
       </div>
       
-      <div className="container mx-auto px-10 py-10 md:py-20 lg:py-20 flex flex-col lg:flex-row items-center relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 pt-4 pb-10 md:py-20 lg:py-20 flex flex-col lg:flex-row items-center relative z-10">
         <div className="lg:w-1/2 z-10 mb-12 lg:mb-0">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-petti-deep-blue dark:text-white leading-tight">
             Cuidado de mascotas <span className="text-petti-blue">a tu puerta</span>.

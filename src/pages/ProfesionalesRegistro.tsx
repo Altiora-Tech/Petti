@@ -22,19 +22,43 @@ const ProfesionalesRegistro: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <div>
                   <label htmlFor="fullName" className="block text-sm font-medium text-petti-deep-blue/80 dark:text-petti-base/80 mb-2">Nombre Completo</label>
-                  <input type="text" id="fullName" className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" required />
+                  <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName"
+                    className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" 
+                    required 
+                  />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-petti-deep-blue/80 dark:text-petti-base/80 mb-2">Correo Electrónico</label>
-                  <input type="email" id="email" className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" required />
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" 
+                    required 
+                  />
                 </div>
                  <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-petti-deep-blue/80 dark:text-petti-base/80 mb-2">Teléfono</label>
-                  <input type="tel" id="phone" className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" required />
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone"
+                    className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" 
+                    required 
+                  />
                 </div>
                  <div>
                   <label htmlFor="city" className="block text-sm font-medium text-petti-deep-blue/80 dark:text-petti-base/80 mb-2">Ciudad</label>
-                  <input type="text" id="city" className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" required />
+                  <input 
+                    type="text" 
+                    id="city" 
+                    name="city"
+                    className="w-full px-4 py-3 rounded-xl border border-petti-light-blue dark:border-petti-light-blue/20 bg-petti-base/50 dark:bg-petti-light-blue/10 focus:outline-none focus:ring-2 focus:ring-petti-blue transition" 
+                    required 
+                  />
                 </div>
               </div>
             </div>
@@ -65,8 +89,7 @@ const ProfesionalesRegistro: React.FC = () => {
                   type="submit" 
                   name="button"
                   id="button"
-                  aria-label="button"
-                  required
+                  aria-label="Enviar solicitud de registro"
                   className="bg-petti-blue text-white px-10 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-transform hover:scale-105 shadow-lg">
                     Enviar Solicitud
                 </button>
